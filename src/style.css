@@ -145,8 +145,8 @@ h2 {
     border-radius: 0px;
 }
 
-.day-cell {
-    min-height: 120px; 
+.day-cell { 
+    min-height: 80px;
     border-right: 1px solid #dadce0;
     border-bottom: 1px solid #dadce0;
     padding: 5px;
@@ -396,10 +396,10 @@ h2 {
     }
     .day-view-grid {
         padding: 5px;
-        min-height: 350px;
+        min-height: 120px;
     }
     .day-view-grid .day-cell {
-        min-height: 300px; 
+        min-height: 120px; 
         padding: 10px;
     }
 }
@@ -422,12 +422,12 @@ h2 {
 
 .week-grid {
     grid-template-columns: repeat(7, 1fr);
-    min-height: 150px; 
+    min-height: 80px; 
     border-left: 1px solid #dadce0; 
 }
 
 .week-grid .day-cell {
-    min-height: 120px; 
+    min-height: 80px; 
 }
 
 .week-grid .day-outside-month {
@@ -454,7 +454,7 @@ h2 {
 
 .day-view-grid {
     grid-template-columns: 1fr;
-    min-height: 500px; 
+    min-height: 80px; 
     padding: 0; 
     border-top: none; 
     border-left: none; 
@@ -464,7 +464,7 @@ h2 {
 
 .day-view-grid .day-cell {
     border: none; 
-    min-height: 450px; 
+    min-height: 80px; 
     padding: 15px;
     
     border-top: 1px solid #dadce0; 
