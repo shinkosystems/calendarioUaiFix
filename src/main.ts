@@ -14,8 +14,7 @@ import {
     endOfWeek,      
     startOfMonth,   
     endOfMonth,     
-    isAfter,        
-    getDay          
+    isAfter         
 } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; 
 
@@ -193,7 +192,7 @@ function renderTasksList(tasks: TaskCardData[]) {
     if (currentMode === 'month' || currentMode === 'week' || currentMode === 'day') {
         
         let start: Date;
-        let end: Date;
+        // let end: Date; // VARIÁVEL 'end' REMOVIDA
         let visibleTasksLimit: number; 
         let gridClass: string;
         let headerClass: string;
@@ -204,19 +203,19 @@ function renderTasksList(tasks: TaskCardData[]) {
             const firstDayOfMonth = startOfMonth(selectedDate);
             // CORREÇÃO CRÍTICA: O calendário deve começar no domingo da semana em que o mês começa.
             start = startOfWeek(firstDayOfMonth, weekOptions); 
-            end = endOfMonth(selectedDate);
+            // end = endOfMonth(selectedDate); // VARIÁVEL 'end' REMOVIDA
             visibleTasksLimit = 2; 
             gridClass = 'calendar-grid month-grid';
             headerClass = 'calendar-header month-header';
         } else if (currentMode === 'week') {
             start = startOfWeek(selectedDate, weekOptions);
-            end = endOfWeek(selectedDate, weekOptions);
+            // end = endOfWeek(selectedDate, weekOptions); // VARIÁVEL 'end' REMOVIDA
             visibleTasksLimit = 2; 
             gridClass = 'calendar-grid week-grid';
             headerClass = 'calendar-header week-header';
         } else { // currentMode === 'day'
             start = selectedDate;
-            end = selectedDate;
+            // end = selectedDate; // VARIÁVEL 'end' REMOVIDA
             // No modo dia, exibimos TUDO, sem limite e sem botão "mais".
             visibleTasksLimit = 1000; 
             gridClass = 'calendar-grid day-view-grid';
@@ -441,10 +440,11 @@ function updateWorkerTitle() {
 async function loadTasks() {
   if (!trabalhadorUuid) {
     const listEl = document.getElementById('tasks-list') as HTMLDivElement;
-    listEl.innerHTML = '<p>Erro: UUID do Trabalhador não encontrado na URL.</p>';
+    listEl.innerHTML = '<p class="error-message">Erro: UUID do Trabalhador não encontrado na URL.</p>';
     return;
   }
   
+  // Limpa a lista antes de carregar
   renderTasksList([]); 
   
   const tasks = await fetchTasks(currentMode, selectedDate, trabalhadorUuid); 
@@ -474,6 +474,7 @@ function setupFilters() {
     setActiveFilter('day', 'filter-day');
   };
   
+  // Define o filtro inicial
   setActiveFilter(currentMode, 'filter-month');
 }
 
@@ -503,7 +504,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   trabalhadorUuid = getTrabalhadorUuidFromUrl(); 
   
   if (!trabalhadorUuid) {
-      document.getElementById('app')!.innerHTML = '<h1>Acesso Negado</h1><p>UUID do Trabalhador é obrigatório para carregar a agenda.</p>';
+      document.getElementById('app')!.innerHTML = '<h1>Acesso Negado</h1><p class="error-message">UUID do Trabalhador é obrigatório para carregar a agenda.</p>';
       return;
   }
   
