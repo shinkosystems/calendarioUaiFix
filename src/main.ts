@@ -110,7 +110,7 @@ function showDayTasksModal(dayKey: string, tasks: TaskDisplayData[]) {
             `).join('')}
         </div>
     `;
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
 }
 
 /** Exibe o modal com os detalhes de uma única tarefa. */
@@ -129,7 +129,7 @@ function showTaskDetailsModal(task: TaskCardData) {
             <p><strong>Chave Única:</strong> ${task.chaveUnica}</p>
         </div>
     `;
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
 }
 
 /**
@@ -251,7 +251,7 @@ function renderTasksList(tasks: TaskCardData[]) {
         // 2. Renderiza o cabeçalho e a grade
         listEl.innerHTML = `
             <div class="${headerClass}">
-                ${currentMode === 'day' ? `<div>${format(selectedDate, 'EEEE', { locale: ptBR })}</div>` : '<div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>'}
+                ${currentMode === 'day' ? `<div> </div>` : '<div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>'}
             </div>
             <div class="${gridClass}"></div>
         `;
@@ -353,13 +353,17 @@ function renderDatePicker() {
   const tasksTitleEl = document.getElementById('tasks-title')! as HTMLHeadingElement;
   
   // Input de data (reutilizado para Day e Month)
-  const dateInput = document.createElement('input');
+const dateInput = document.createElement('input');
   dateInput.type = 'date';
   dateInput.value = format(selectedDate, 'yyyy-MM-dd');
   dateInput.onchange = (e) => {
       const value = (e.target as HTMLInputElement).value;
       if (value) {
-          selectedDate = new Date(value);
+          // --- CORREÇÃO DO FUSO HORÁRIO 2.0: Adiciona T00:00:00 ---
+          // Isso força o new Date() a interpretar a string no fuso horário local, 
+          // em vez de UTC, garantindo que o dia selecionado seja mantido.
+          selectedDate = new Date(value + 'T00:00:00'); 
+          // --------------------------------------------------------
           loadTasks();
           renderDatePicker(); 
       }

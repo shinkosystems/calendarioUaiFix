@@ -191,7 +191,7 @@ h2 {
     background-color: #e0e0e0; 
     color: #555;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     font-size: 0.7em; 
@@ -208,29 +208,36 @@ h2 {
 /* --- 5. Modal de Detalhes --- */
 
 .modal {
-    display: none; /* Escondido por padrão */
-    position: fixed; /* Fica por cima de tudo */
-    z-index: 1000; /* Alto z-index */
+    /* CORREÇÃO APLICADA AQUI: display: flex; e alinhamentos foram removidos. */
+    /* O JS define modal.style.display = 'flex'; (o que também permite o alinhamento flex) */
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Habilita scroll se o conteúdo for muito grande */
-    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+/* Adicionamos uma regra específica que só é aplicada QUANDO o JS define display: flex */
+.modal[style*="display: flex"] {
     justify-content: center;
     align-items: center;
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: auto; /* Centraliza o modal */
+    /* margin: auto é redundante com align-items/justify-content do pai, mas não causa problema */
+    margin: auto; 
     padding: 25px;
-    border-radius: 8px;
+    border-radius: 40px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     width: 90%;
-    max-width: 500px; /* Largura máxima para um modal de detalhes */
+    max-width: 500px; 
     position: relative;
-    animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+    animation: fadeIn 0.3s ease-out; 
 }
 
 .close-button {
@@ -242,6 +249,8 @@ h2 {
     position: absolute;
     top: 10px;
     right: 15px;
+    padding-right: 16px;
+    padding-top: 8px;
 }
 
 .close-button:hover,
@@ -262,7 +271,7 @@ h2 {
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
-    border-radius: 5px;
+    border-radius: 40px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
@@ -420,10 +429,11 @@ h2 {
     /* O cabeçalho só precisa de 1 coluna para o dia da semana */
     grid-template-columns: 1fr;
     font-size: 1.2em;
-    padding: 10px 0;
+    padding: 16px;
     text-align: left;
+    padding-top: 16px;
     padding-left: 20px;
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     border-radius: 8px 8px 0 0;
     margin-top: -20px; 
 }
@@ -432,17 +442,17 @@ h2 {
     /* O grid só precisa de 1 coluna para o card do dia */
     grid-template-columns: 1fr;
     min-height: 500px; 
-    padding: 0; /* REMOVIDO: 20px - O padding agora será na célula para centralizar o card */
+    padding: 0; 
     border-top: none; 
     border-left: none; 
-    border-right: none; /* REMOVIDO: Bordas laterais do grid */
-    border-bottom: 1px solid #dadce0; /* Adiciona uma borda inferior limpa */
+    border-right: none; 
+    border-bottom: 1px solid #dadce0; 
 }
 
 /* O card único do dia deve ocupar 100% do espaço, e não ter bordas laterais desnecessárias */
 .day-view-grid .day-cell {
     /* Ajustes para o card ficar como um painel único */
-    border: none; /* Remove todas as bordas herdadas do day-cell padrão */
+    border: none; 
     min-height: 450px; 
     padding: 15px;
     
@@ -450,7 +460,7 @@ h2 {
     border-top: 1px solid #dadce0; 
     /* Garante que o card ocupe o espaço e mantenha o layout de coluna para os eventos */
     width: 100%; 
-    box-sizing: border-box; /* Garante que padding não estoure a largura */
+    box-sizing: border-box; 
 }
 
 /* Estilo para eventos no modo dia, onde a fonte pode ser maior */
