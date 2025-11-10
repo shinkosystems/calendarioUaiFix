@@ -7,20 +7,26 @@
 body {
     font-family: -apple-system, BlinkMacMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    padding: 0; /* CORREÇÃO: Remove padding externo */
-    background-color: transparent; /* CORREÇÃO: Fundo transparente para o app ocupar todo o espaço */
+    padding: 0; 
+    background-color: transparent; 
     color: #333;
     border-radius: 40px;
+    overflow: hidden; /* Desabilita a rolagem na página inteira */
 }
 
 #app {
-    max-width: 100%; /* CORREÇÃO: Permite que ele use a largura total */
-    min-height: 100vh; /* NOVO: Garante que ocupe pelo menos a altura total da viewport */
-    margin: 0; /* CORREÇÃO: Remove a centralização e as margens */
-    background-color: #ffffff; /* Fundo branco do card principal */
+    max-width: 100%; 
+    height: 100vh; /* Força a altura a ser exatamente 100% da viewport */
+    margin: 0; 
+    background-color: #ffffff; 
     padding: 25px;
-    border-radius: 0; /* CORREÇÃO: Remove o arredondamento das bordas */
-    box-shadow: none; /* CORREÇÃO: Remove a sombra */
+    border-radius: 0; 
+    box-shadow: none; 
+    
+    display: flex;
+    flex-direction: column;
+    /* CORREÇÃO CHAVE: Inclui o padding DENTRO da altura total do #app */
+    box-sizing: border-box; 
 }
 
 h1 {
@@ -102,15 +108,25 @@ h2 {
 
 /* --- 3. Estrutura de Calendário --- */
 
+/* Regra para a Rolagem Exclusiva do Calendário */
+#tasks-list {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding-top: 5px;
+    padding-bottom: 16px; /* Adiciona 16px de espaço em branco abaixo do calendário */
+    box-sizing: border-box; 
+}
+
+
 .calendar-header {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     font-weight: bold;
-    color: #5f6368; /* Cor mais suave para cabeçalho */
+    color: #5f6368; 
     text-align: center;
     border-bottom: 1px solid #dadce0;
     padding-bottom: 16px;
-    margin-bottom: 0; /* Remove margem para se alinhar com a grade */
+    margin-bottom: 0; 
     font-size: 0.9em;
 }
 
@@ -118,25 +134,25 @@ h2 {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     border-top: 1px solid #dadce0;
-    border-left: 1px solid #dadce0; /* Borda esquerda para a grade */
+    border-left: 1px solid #dadce0; 
     padding-bottom: 0px; 
     border-radius: 0px;
 }
 
 .day-cell {
-    min-height: 120px; /* Altura mínima para cada célula */
+    min-height: 120px; 
     border-right: 1px solid #dadce0;
     border-bottom: 1px solid #dadce0;
     padding: 5px;
     background-color: #fff;
     position: relative;
     font-size: 0.9em;
-    display: flex; /* Para organizar o número do dia e os eventos */
+    display: flex; 
     flex-direction: column;
 }
 
 .day-cell:hover {
-    background-color: #f5f5f5; /* Leve destaque ao passar o mouse */
+    background-color: #f5f5f5; 
 }
 
 .day-number {
@@ -149,7 +165,7 @@ h2 {
 }
 
 .day-outside-month {
-    background-color: #f8f8f8; /* Fundo cinza para dias de outros meses */
+    background-color: #f8f8f8; 
     color: #aaa;
 }
 
@@ -160,15 +176,15 @@ h2 {
 .events-list {
     display: flex;
     flex-direction: column;
-    gap: 2px; /* Espaçamento entre os eventos */
-    flex-grow: 1; /* Permite que a lista de eventos ocupe o espaço restante */
-    overflow: hidden; /* Esconde eventos que excedem a altura, caso não haja botão "mais" */
+    gap: 2px; 
+    flex-grow: 1; 
+    overflow: hidden; 
 }
 
 /* --- 4. Eventos de Calendário Compactos --- */
 
 .calendar-event {
-    background-color: #90CAF9; /* Cor de fallback, será sobrescrita pelo JS */
+    background-color: #90CAF9; 
     color: #222;
     padding: 2px 5px;
     border-radius:40px;
@@ -179,7 +195,7 @@ h2 {
     line-height: 1.3;
     cursor: pointer;
     margin-top: 1px;
-    max-height: 1.3em; /* Para manter compacto */
+    max-height: 1.3em; 
 }
 
 .calendar-event:hover {
@@ -187,7 +203,7 @@ h2 {
 }
 
 .more-tasks-btn {
-    width: calc(100% - 10px); /* Ajusta a largura com padding */
+    width: calc(100% - 10px); 
     margin: 5px 5px 0 5px;
     padding: 2px 0;
     background-color: #e0e0e0; 
@@ -210,7 +226,7 @@ h2 {
 /* --- 5. Modal de Detalhes --- */
 
 .modal {
-    display: none; /* Escondido por padrão, aberto pelo JS com 'flex' */
+    display: none; 
     position: fixed; 
     z-index: 1000; 
     left: 0;
@@ -221,7 +237,6 @@ h2 {
     background-color: rgba(0,0,0,0.4); 
 }
 
-/* Regra para centralizar o conteúdo quando o JS define display: flex */
 .modal[style*="display: flex"] {
     justify-content: center;
     align-items: center;
@@ -343,7 +358,7 @@ h2 {
     }
 
     .day-cell {
-        min-height: 80px; /* Reduz a altura da célula em telas menores */
+        min-height: 80px; 
         font-size: 0.8em;
         padding: 3px;
     }
@@ -401,16 +416,14 @@ h2 {
 
 .week-grid {
     grid-template-columns: repeat(7, 1fr);
-    min-height: 150px; /* Altura mínima ajustada para 150px */
+    min-height: 150px; 
     border-left: 1px solid #dadce0; 
 }
 
-/* Ajusta as células da semana para que fiquem mais densas/compactas. */
 .week-grid .day-cell {
-    min-height: 120px; /* Mantém a altura mínima consistente com o modo mês */
+    min-height: 120px; 
 }
 
-/* No modo semana, não queremos que células vazias sejam desbotadas */
 .week-grid .day-outside-month {
     background-color: #fff; 
     color: #333;
@@ -423,19 +436,17 @@ h2 {
 /* --- ESTILOS ESPECÍFICOS PARA O MODO DIA ÚNICO (day-view-grid) --- */
 
 .day-view-header {
-    /* O cabeçalho só precisa de 1 coluna para o dia da semana */
     grid-template-columns: 1fr;
     font-size: 1.2em;
     padding: 10px 0;
     text-align: left;
     padding-left: 20px;
     background-color: #f8f9fa;
-    border-radius: 0; /* CORREÇÃO: Remove arredondamento por causa da integração do #app */
+    border-radius: 0; 
     margin-top: -20px; 
 }
 
 .day-view-grid {
-    /* O grid só precisa de 1 coluna para o card do dia */
     grid-template-columns: 1fr;
     min-height: 500px; 
     padding: 0; 
@@ -445,21 +456,16 @@ h2 {
     border-bottom: 1px solid #dadce0; 
 }
 
-/* O card único do dia deve ocupar 100% do espaço, e não ter bordas laterais desnecessárias */
 .day-view-grid .day-cell {
-    /* Ajustes para o card ficar como um painel único */
     border: none; 
     min-height: 450px; 
     padding: 15px;
     
-    /* Adiciona a borda externa que simula a "grade" */
     border-top: 1px solid #dadce0; 
-    /* Garante que o card ocupe o espaço e mantenha o layout de coluna para os eventos */
     width: 100%; 
     box-sizing: border-box; 
 }
 
-/* Estilo para eventos no modo dia, onde a fonte pode ser maior */
 .day-mode-event {
     font-size: 0.9em;
     padding: 5px 8px;
@@ -467,7 +473,6 @@ h2 {
     line-height: 1.4;
 }
 
-/* Remove o número do dia, pois ele está no cabeçalho. */
 .day-view-grid .day-number {
     display: none;
 }
