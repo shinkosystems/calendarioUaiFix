@@ -11,7 +11,7 @@ body {
     background-color: transparent; 
     color: #333;
     border-radius: 40px;
-    overflow: hidden; /* Desabilita a rolagem na página inteira */
+    overflow: visible; /* Desabilita a rolagem na página inteira */
 }
 
 #app {
