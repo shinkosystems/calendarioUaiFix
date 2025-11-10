@@ -127,8 +127,6 @@ function showTaskDetailsModal(task: TaskCardData) {
             <p><strong>Cliente:</strong> ${task.clienteNome}</p>
             <p><strong>Bairro:</strong> ${task.bairro}</p>
             <p><strong>Chave Única:</strong> ${task.chaveUnica}</p>
-            <p><strong>UUID Cliente:</strong> ${task.clienteUuid}</p>
-            <p><strong>UUID Trabalhador:</strong> ${task.profissionalUuid}</p>
         </div>
     `;
     modal.style.display = 'block';
