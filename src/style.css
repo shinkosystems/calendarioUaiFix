@@ -1,0 +1,467 @@
+/*
+ * style.css (Versão Calendário/Grade - Estilo Google)
+ */
+
+/* --- 1. Estilos Base e Layout --- */
+
+body {
+    font-family: -apple-system, BlinkMacMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f9;
+    color: #333;
+}
+
+#app {
+    max-width: 1200px; /* Aumentado para acomodar o calendário */
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #14224e;
+    border-bottom: 2px solid #14224e;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+h2 {
+    color: #444;
+    margin-top: 30px;
+}
+
+/* --- 2. Controles e Filtros (Mantidos) --- */
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.filter-buttons button {
+    padding: 10px 15px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-weight: 500;
+}
+
+.filter-buttons button:hover {
+    background-color: #e0e0e0;
+}
+
+.filter-buttons button.active {
+    background-color: #14224e;
+    color: white;
+    border-color: #00568c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#date-picker-container {
+    display: flex;
+    align-items: center;
+}
+
+#date-picker-container button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 40px;
+    margin: 0 5px;
+    transition: background-color 0.2s;
+}
+#date-picker-container button:hover {
+    background-color: #f0f0f0;
+}
+
+#current-date-display {
+    padding: 0 15px;
+    font-weight: bold;
+    color: #14224e;
+    min-width: 150px;
+    text-align: center;
+}
+
+#date-picker-container input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    margin-left: 10px;
+}
+
+/* --- 3. Estrutura de Calendário --- */
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    color: #5f6368; /* Cor mais suave para cabeçalho */
+    text-align: center;
+    border-bottom: 1px solid #dadce0;
+    padding-bottom: 16px;
+    margin-bottom: 0; /* Remove margem para se alinhar com a grade */
+    font-size: 0.9em;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1px solid #dadce0;
+    border-left: 1px solid #dadce0; /* Borda esquerda para a grade */
+    padding-bottom: 0px; 
+    border-radius: 0px;
+}
+
+.day-cell {
+    min-height: 120px; /* Altura mínima para cada célula */
+    border-right: 1px solid #dadce0;
+    border-bottom: 1px solid #dadce0;
+    padding: 5px;
+    background-color: #fff;
+    position: relative;
+    font-size: 0.9em;
+    display: flex; /* Para organizar o número do dia e os eventos */
+    flex-direction: column;
+}
+
+.day-cell:hover {
+    background-color: #f5f5f5; /* Leve destaque ao passar o mouse */
+}
+
+.day-number {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.day-outside-month {
+    background-color: #f8f8f8; /* Fundo cinza para dias de outros meses */
+    color: #aaa;
+}
+
+.day-outside-month .day-number {
+    color: #aaa;
+}
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* Espaçamento entre os eventos */
+    flex-grow: 1; /* Permite que a lista de eventos ocupe o espaço restante */
+    overflow: hidden; /* Esconde eventos que excedem a altura, caso não haja botão "mais" */
+}
+
+/* --- 4. Eventos de Calendário Compactos --- */
+
+.calendar-event {
+    background-color: #90CAF9; /* Cor de fallback, será sobrescrita pelo JS */
+    color: #222;
+    padding: 2px 5px;
+    border-radius:40px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.8em;
+    line-height: 1.3;
+    cursor: pointer;
+    margin-top: 1px;
+    max-height: 1.3em; /* Para manter compacto */
+}
+
+.calendar-event:hover {
+    opacity: 0.8;
+}
+
+.more-tasks-btn {
+    width: calc(100% - 10px); /* Ajusta a largura com padding */
+    margin: 5px 5px 0 5px;
+    padding: 2px 0;
+    background-color: #e0e0e0; 
+    color: #555;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.7em; 
+    line-height: 1;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.more-tasks-btn:hover {
+    background-color: #ccc;
+}
+
+
+/* --- 5. Modal de Detalhes --- */
+
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica por cima de tudo */
+    z-index: 1000; /* Alto z-index */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita scroll se o conteúdo for muito grande */
+    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Centraliza o modal */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    width: 90%;
+    max-width: 500px; /* Largura máxima para um modal de detalhes */
+    position: relative;
+    animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+#modal-body h3 {
+    color: #14224e;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.modal-day-tasks-list .modal-task-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.modal-task-item .modal-task-summary {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.modal-task-item .modal-task-details {
+    font-size: 0.9em;
+    color: #555;
+    margin-left: 10px;
+}
+
+.modal-task-full-details p {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.modal-task-full-details p strong {
+    color: #14224e;
+    min-width: 100px;
+    display: inline-block;
+}
+
+/* Animação para o modal */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 6. Responsividade (Ajustado) --- */
+
+@media (max-width: 768px) {
+    #app {
+        padding: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-buttons {
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-around;
+        gap: 5px;
+    }
+    
+    .filter-buttons button {
+        flex: 1;
+        margin-right: 0;
+    }
+
+    #date-picker-container {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+    #date-picker-container input[type="date"] {
+        flex-grow: 1;
+    }
+    #current-date-display {
+        flex-grow: 1;
+        min-width: auto;
+    }
+
+    .calendar-header {
+        font-size: 0.8em;
+    }
+
+    .day-cell {
+        min-height: 80px; /* Reduz a altura da célula em telas menores */
+        font-size: 0.8em;
+        padding: 3px;
+    }
+    .day-number {
+        font-size: 1em;
+        padding-right: 3px;
+    }
+
+    .calendar-event {
+        font-size: 0.7em;
+        padding: 1px 3px;
+    }
+    .more-tasks-btn {
+        font-size: 0.6em;
+        padding: 1px 0;
+        margin: 3px 3px 0 3px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    /* Ajustes específicos para o modo DIA em telas pequenas */
+    .day-view-header {
+        font-size: 1em;
+        padding-left: 10px;
+        margin-top: 0; 
+    }
+    .day-view-grid {
+        padding: 5px;
+        min-height: 350px;
+    }
+    .day-view-grid .day-cell {
+        min-height: 300px; 
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-buttons {
+        flex-wrap: wrap;
+    }
+    .filter-buttons button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    #date-picker-container {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* --- ESTILOS ESPECÍFICOS PARA O MODO SEMANAL (AJUSTADO PARA COMPACTO) --- */
+
+.week-grid {
+    grid-template-columns: repeat(7, 1fr);
+    min-height: 150px; /* Altura mínima ajustada para 150px */
+    border-left: 1px solid #dadce0; 
+}
+
+/* Ajusta as células da semana para que fiquem mais densas/compactas. */
+.week-grid .day-cell {
+    min-height: 120px; /* Mantém a altura mínima consistente com o modo mês */
+}
+
+/* No modo semana, não queremos que células vazias sejam desbotadas */
+.week-grid .day-outside-month {
+    background-color: #fff; 
+    color: #333;
+}
+.week-grid .day-outside-month .day-number {
+    color: #333;
+}
+
+
+/* --- ESTILOS ESPECÍFICOS PARA O MODO DIA ÚNICO (day-view-grid) --- */
+
+.day-view-header {
+    /* O cabeçalho só precisa de 1 coluna para o dia da semana */
+    grid-template-columns: 1fr;
+    font-size: 1.2em;
+    padding: 10px 0;
+    text-align: left;
+    padding-left: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+    margin-top: -20px; 
+}
+
+.day-view-grid {
+    /* O grid só precisa de 1 coluna para o card do dia */
+    grid-template-columns: 1fr;
+    min-height: 500px; 
+    padding: 0; /* REMOVIDO: 20px - O padding agora será na célula para centralizar o card */
+    border-top: none; 
+    border-left: none; 
+    border-right: none; /* REMOVIDO: Bordas laterais do grid */
+    border-bottom: 1px solid #dadce0; /* Adiciona uma borda inferior limpa */
+}
+
+/* O card único do dia deve ocupar 100% do espaço, e não ter bordas laterais desnecessárias */
+.day-view-grid .day-cell {
+    /* Ajustes para o card ficar como um painel único */
+    border: none; /* Remove todas as bordas herdadas do day-cell padrão */
+    min-height: 450px; 
+    padding: 15px;
+    
+    /* Adiciona a borda externa que simula a "grade" */
+    border-top: 1px solid #dadce0; 
+    /* Garante que o card ocupe o espaço e mantenha o layout de coluna para os eventos */
+    width: 100%; 
+    box-sizing: border-box; /* Garante que padding não estoure a largura */
+}
+
+/* Estilo para eventos no modo dia, onde a fonte pode ser maior */
+.day-mode-event {
+    font-size: 0.9em;
+    padding: 5px 8px;
+    max-height: none; 
+    line-height: 1.4;
+}
+
+/* Remove o número do dia, pois ele está no cabeçalho. */
+.day-view-grid .day-number {
+    display: none;
+}
