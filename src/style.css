@@ -11,20 +11,24 @@ body {
     background-color: transparent; 
     color: #333;
     border-radius: 40px;
-    overflow: hidden; /* Desabilita a rolagem na página inteira */
+    /* REVERTIDO: Remove overflow: hidden para que o body possa rolar */
+    overflow: auto; 
 }
 
 #app {
     max-width: 100%; 
-    height: 100vh; /* Força a altura a ser exatamente 100% da viewport */
+    /* REVERTIDO: Remove as regras de flexbox/altura fixa */
+    /* height: 100vh; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* box-sizing: border-box; */ 
+
+    min-height: 100vh; /* Mantém pelo menos a altura da tela, mas permite crescer */
     margin: 0; 
     background-color: #ffffff; 
     padding: 25px;
     border-radius: 0; 
     box-shadow: none; 
-    
-    display: flex;
-    flex-direction: column;
 }
 
 h1 {
@@ -36,7 +40,7 @@ h1 {
 
 h2 {
     color: #444;
-    /* CORREÇÃO: Reduzido para aproximar do cabeçalho */
+    /* Espaçamento mantido (10px) */
     margin-top: 10px; 
 }
 
@@ -46,7 +50,7 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* CORREÇÃO: Reduzido para aproximar do h2 */
+    /* Espaçamento mantido (10px) */
     margin-bottom: 10px; 
     flex-wrap: wrap;
 }
@@ -108,12 +112,14 @@ h2 {
 
 /* --- 3. Estrutura de Calendário --- */
 
-/* Regra para a Rolagem Exclusiva do Calendário */
+/* Regra de Rolagem Revertida para a página inteira */
 #tasks-list {
-    flex-grow: 1; 
-    overflow-y: auto; 
+    /* REVERTIDO: Remove flex-grow e overflow-y para deixar a página rolar */
+    /* flex-grow: 1; */ 
+    /* overflow-y: auto; */ 
+    
     padding-top: 5px;
-    padding-bottom: 16px; /* NOVO: Adiciona 16px de espaço em branco abaixo do calendário */
+    padding-bottom: 16px; 
     box-sizing: border-box; 
 }
 
